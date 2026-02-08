@@ -8,7 +8,7 @@ Proyecto de Infraestructura como Código (IaC) para desplegar una aplicación en
 
 ```mermaid
 graph TD
-    A["👨‍💻 Código de la Aplicación<br/>(Dockerfile + App)"] -->|docker build| B["🐳 Construir Imagen Docker<br/>(jbautistav/app-infradevops-dmc)"]
+    A["👨‍💻 Código de la Aplicación Java Spring<br/>(Dockerfile + App)"] -->|docker build| B["🐳 Construir Imagen Docker<br/>(jbautistav/app-infradevops-dmc)"]
     B -->|docker push| C["☁️ Docker Hub<br/>(Registro Público)"]
     C -->|Link de Imagen Pública| D["📋 terraform.tfvars<br/>(container_image)"]
     D -->|terraform apply| E["🏗️ Terraform<br/>(Provisiona Infraestructura)"]
@@ -17,7 +17,7 @@ graph TD
     F -->|azurerm_container_app_environment| H["🌍 Container App Environment<br/>(env-iac-final)"]
     F -->|azurerm_container_app| I["🚀 Container App<br/>(hello-iac)"]
     H -.->|Host| I
-    I -->|Puerto 8090| J["📱 Aplicación en Azure<br/>(HTTPS disponible)"]
+    I -->|Puerto 8090| J["📱 Aplicación en Azure<br/>https://hello-iac.RANDOM-STRING.eastus.azurecontainerapps.io/hello<br/>(HTTPS disponible)"]
     
     style A fill:#4CAF50
     style B fill:#FF9800
@@ -129,27 +129,6 @@ Accede a: `https://hello-iac.<RANDOM-STRING>.eastus.azurecontainerapps.io/hello`
 
 ## Estructura del Proyecto
 
-```mermaid
-graph TD
-    A["👨‍💻 Código de la Aplicación Java Spring<br/>(Dockerfile + App)"] -->|docker build| B["🐳 Construir Imagen Docker<br/>(jbautistav/app-infradevops-dmc)"]
-    B -->|docker push| C["☁️ Docker Hub<br/>(Registro Público)"]
-    C -->|Link de Imagen Pública| D["📋 terraform.tfvars<br/>(container_image)"]
-    D -->|terraform apply| E["🏗️ Terraform<br/>(Provisiona Infraestructura)"]
-    E -->|Crear Recursos| F["☁️ Microsoft Azure"]
-    F -->|azurerm_resource_group| G["📦 Resource Group<br/>(rg-iac-final)"]
-    F -->|azurerm_container_app_environment| H["🌍 Container App Environment<br/>(env-iac-final)"]
-    F -->|azurerm_container_app| I["🚀 Container App<br/>(hello-iac)"]
-    H -.->|Host| I
-    I -->|Puerto 8090| J["📱 Aplicación en Azure<br/>https://hello-iac.RANDOM-STRING.eastus.azurecontainerapps.io/hello<br/>(HTTPS disponible)"]
-    
-    style A fill:#4CAF50
-    style B fill:#FF9800
-    style C fill:#2196F3
-    style D fill:#9C27B0
-    style E fill:#F44336
-    style F fill:#00BCD4
-    style J fill:#4CAF50
-```
 
 ```
 .
