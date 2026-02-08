@@ -130,23 +130,25 @@ Accede a: `https://hello-iac.<RANDOM-STRING>.eastus.azurecontainerapps.io/hello`
 ## Estructura del Proyecto
 
 ```mermaid
-graph LR
-    User["👤 Usuario"]
-    HTTPS["🔒 HTTPS Port 443"]
-    Container["🐳 Container App<br/>(hello-iac)"]
-    Port["📡 Port 8090<br/>(Interno)"]
-    App["🚀 Aplicación<br/>(nginx:latest)"]
+graph TD
+    A["👨‍💻 Código de la Aplicación Java Spring<br/>(Dockerfile + App)"] -->|docker build| B["🐳 Construir Imagen Docker<br/>(jbautistav/app-infradevops-dmc)"]
+    B -->|docker push| C["☁️ Docker Hub<br/>(Registro Público)"]
+    C -->|Link de Imagen Pública| D["📋 terraform.tfvars<br/>(container_image)"]
+    D -->|terraform apply| E["🏗️ Terraform<br/>(Provisiona Infraestructura)"]
+    E -->|Crear Recursos| F["☁️ Microsoft Azure"]
+    F -->|azurerm_resource_group| G["📦 Resource Group<br/>(rg-iac-final)"]
+    F -->|azurerm_container_app_environment| H["🌍 Container App Environment<br/>(env-iac-final)"]
+    F -->|azurerm_container_app| I["🚀 Container App<br/>(hello-iac)"]
+    H -.->|Host| I
+    I -->|Puerto 8090| J["📱 Aplicación en Azure<br/>https://hello-iac.RANDOM-STRING.eastus.azurecontainerapps.io/hello<br/>(HTTPS disponible)"]
     
-    User -->|Accesa| HTTPS
-    HTTPS -->|Se mapea a| Container
-    Container -->|Escucha en| Port
-    Port -->|Ejecuta| App
-    
-    style User fill:#4CAF50
-    style HTTPS fill:#FF9800
-    style Container fill:#2196F3
-    style Port fill:#9C27B0
-    style App fill:#F44336
+    style A fill:#4CAF50
+    style B fill:#FF9800
+    style C fill:#2196F3
+    style D fill:#9C27B0
+    style E fill:#F44336
+    style F fill:#00BCD4
+    style J fill:#4CAF50
 ```
 
 ```
